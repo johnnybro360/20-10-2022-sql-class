@@ -23,7 +23,7 @@ namespace WpfApp1
 
         public override string ToString()
         {
-            return $"[{ID}] {FirstName} {LastName} - {DOB}";
+            return $"[{ID}] {FirstName} {LastName} - ({DOB.Year})";
         }
     }
 

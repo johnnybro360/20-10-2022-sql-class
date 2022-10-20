@@ -62,7 +62,56 @@ namespace WpfApp1
             return trafficlist;
         }
 
-        public List<Person> GetPeople() 
+        public Traffic GetTraffic(int trafficid)
+        {
+            Traffic traffic = null;
+
+            string sqlQuery = "SELECT * FROM traffic where id=@id;";
+            List<Traffic> trafficlist = new List<Traffic>();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(sqlQuery, conn);
+                MySqlParameter parameter = cmd.CreateParameter();
+                parameter.ParameterName = "id";
+                parameter.Value = trafficid;
+                cmd.Parameters.Add(parameter);
+                cmd.Prepare();
+
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    //vehicleListbox.Items.Add($"{rdr[1]} : {rdr[2], 10}kph");
+                    //traffic.Add(new Traffic(int.Parse(rdr[0].ToString()), rdr[1].ToString(), int.Parse(rdr[2].ToString()), int.Parse(rdr[3].ToString())));
+                    int id = Convert.ToInt32(rdr["id"]);
+                    string plate = rdr["number_plate"].ToString();
+                    int speed = Convert.ToInt32(rdr["speed"]);
+                    int limit = Convert.ToInt32(rdr["speed_limit"]);
+                    traffic = new Traffic(id, plate, speed, limit);
+                    //trafficlist.Add(traffic);
+
+                }
+            }
+            catch (InvalidCastException castEx)
+            {
+                Console.WriteLine(castEx.Message);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+
+         
+            }
+            return traffic;
+
+        }
+
+        public List<Person> GetPeople()
         {
             List<Person> personList = new List<Person>();
             string sqlQuery = "select * from people;";
@@ -84,7 +133,7 @@ namespace WpfApp1
                 }
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine();
             }
@@ -93,6 +142,33 @@ namespace WpfApp1
                 conn.Close();
             }
             return personList;
+        }
+
+
+        public void UpdatePeople(string name,int id) 
+        {
+            List<Person> personList = new List<Person>();
+            string sqlQuery = "update people set first_name=@name where id=@id;";
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(sqlQuery, conn);
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@id", id);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                //MySqlDataReader rdr = cmd.ExecuteReader();
+
+
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine();
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }

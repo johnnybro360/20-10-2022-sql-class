@@ -37,6 +37,7 @@ namespace WpfApp1
             InitializeComponent();
             //dbConnectionString = $"server={dbServer}; user={dbUser}; database={dbName}; port={dbPort}; password={dbPassword};";
             //conn = new MySqlConnection(dbConnectionString);
+            //service.UpdatePeople("Matt", 2);
         }
 
         private void FillButton_Click(object sender, RoutedEventArgs e)
@@ -70,8 +71,11 @@ namespace WpfApp1
             //}
 
             //conn.Close();
-            vehicleListbox.Items.Clear();
-            vehicleListbox.ItemsSource = service.GetPeople();// service.GetTraffic();
+            int id = Convert.ToInt32(searchTextbox.Text);
+
+            //vehicleListbox.ItemsSource = service.GetPeople();
+            vehicleListbox.Items.Add(service.GetTraffic(id));
+            //vehicleListbox.ItemsSource = service.GetTraffic(id); // service.GetTraffic();
         }
 
 
