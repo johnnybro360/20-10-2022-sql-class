@@ -98,6 +98,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Person.cs" />
     <Compile Include="MySQLDATAService.cs" />
     <Compile Include="Traffic.cs" />
     <Page Include="MainWindow.xaml">

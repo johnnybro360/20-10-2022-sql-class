@@ -71,7 +71,7 @@ namespace WpfApp1
 
             //conn.Close();
             vehicleListbox.Items.Clear();
-            vehicleListbox.ItemsSource = service.GetTraffic();
+            vehicleListbox.ItemsSource = service.GetPeople();// service.GetTraffic();
         }
 
 

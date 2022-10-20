@@ -61,5 +61,38 @@ namespace WpfApp1
             }
             return trafficlist;
         }
+
+        public List<Person> GetPeople() 
+        {
+            List<Person> personList = new List<Person>();
+            string sqlQuery = "select * from people;";
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(sqlQuery, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    int id = int.Parse(rdr["id"].ToString());
+                    string firstName = rdr["first_name"].ToString();
+                    string lastName = rdr["last_name"].ToString();
+                    DateTime dob = Convert.ToDateTime(rdr["dob"]);
+
+                    Person person = new Person(id, firstName, lastName, dob);
+                    personList.Add(person);
+
+                }
+
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine();
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return personList;
+        }
     }
 }
