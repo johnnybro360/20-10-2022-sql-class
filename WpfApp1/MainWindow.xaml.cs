@@ -71,6 +71,7 @@ namespace WpfApp1
             //}
 
             //conn.Close();
+            if (searchTextbox.Text == "") return;
             int id = Convert.ToInt32(searchTextbox.Text);
 
             //vehicleListbox.ItemsSource = service.GetPeople();
